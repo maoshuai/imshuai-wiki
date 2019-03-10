@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<div class="page-collection">
+  <div class="jumbotron container text-center"{%if page.background%} style="background:{{page.background}}"{%endif%}>
+    <h1>{{page.title}}</h1>
+    <p>{{page.description}}</p>
+  </div>
+  <section class="article-list container">
+    {%for post in site.tags[page.tag] -%}
+    <article>
+      <h3>
+        <a class="title" href="{{ post.url }}">{{ post.title }}</a>
+      </h3>
+      <p class="tag-list">
+        {% for tag in post.tags %}
+        <a class="tag" href="/tags.html#{{tag}}">{{tag}}</a>
+        {% endfor %}
+      </p>
+      <div class="md excerpt">{{ post.excerpt }}</div>
+    </article>
+    {%- endfor %}
+  </section>
+</div>

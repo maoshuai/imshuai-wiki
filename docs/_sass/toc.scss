@@ -1,0 +1,60 @@
+@import 'mixins';
+@import 'variables';
+$padding-horizontal: 25px;
+
+aside.toc{
+  width: $toc-width;
+  margin-top: -38px;
+  > ul {
+    position: sticky;
+    top: 40px;
+    background: white;
+  }
+  ul{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    > .active > a{
+      color: $grey;
+      text-decoration: none;
+      border-left: 1px solid $green;
+    }
+    > .active > ul {
+      display: block;
+    }
+    > li > a {
+      display: block;
+      padding: 8px $padding-horizontal;
+      color: $light-grey;
+      text-decoration: none;
+      &:hover {
+        background-color: lighten($light-grey,20%);
+      }
+    }
+    ul{
+      display: none;
+      > li > a {
+        padding-left: 10px + $padding-horizontal;
+        font-size: 90%;
+      }
+      ul{
+        > li > a {
+          padding-left: 20px + $padding-horizontal;
+        }
+        ul{
+          > li > a {
+            padding-left: 30px + $padding-horizontal;
+          }
+          ul{
+            > li > a {
+              padding-left: 40px + $padding-horizontal;
+            }
+            ul{
+              padding-left: 50px + $padding-horizontal;
+            }
+          } 
+        } 
+      }
+    }
+  }
+}

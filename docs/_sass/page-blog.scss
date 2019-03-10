@@ -1,0 +1,111 @@
+@import 'variables';
+@import 'mixins';
+@import 'toc';
+
+.page-blog {
+  .jumbotron{
+    h1{
+      overflow-wrap: break-word;
+      a.collection{
+        color: white;
+        font-size: 17px;
+        text-shadow: none;
+      }
+      a.collection:hover{
+        color: white;
+      }
+    }
+    .tag-list{
+      white-space: nowrap;
+      overflow: hidden;
+      margin: 0 100px 0 $toc-width + 30px;
+      padding-bottom: 0.5rem;
+      .tag{
+        margin-bottom: .3rem;
+        margin-right: .2rem;
+        border-color: white;
+        color: white;
+      }
+    }
+    &::after{
+      clear: none;
+    }
+  }
+
+  time{
+    font-style: italic;
+    line-height: 1.6rem;
+  }
+
+  .main-content {
+    display: flex;
+    .content{
+      flex: 1;
+      overflow: auto;
+      margin-top: 50px;
+      @include media-xs{
+        margin-top: 30px;
+        margin-left: 0;  
+      }
+      .md {
+        margin-bottom: 50px;
+        color: #333;
+      }
+    }
+    .toc{
+      flex: 0 0 $toc-width;
+      margin-right: 30px;
+    }
+  }
+
+  .author-block{
+    float: right;
+    width: 250px;
+  }
+
+  .post-pager{
+    margin-top: 10px;
+    margin-bottom: 50px;
+    .btn-hover{
+      max-width: 380px;
+      min-width: 200px;
+    }
+    .previous, .next, .recommend{
+      display: block;
+      border-left: 1px solid $blue;
+    }
+    .recommend{
+      display: none;
+    }
+  }
+  .utterance{
+    margin-bottom: 50px;
+  }
+
+  @mixin collapsed(){
+    .content{
+      margin-left: 0px;  
+    }
+    aside{
+      display: none;
+    }
+    .jumbotron{
+      .tag-list{
+        margin-left: 0;
+      }
+    }
+  }
+
+  &.collapsed{
+    @include collapsed();
+  }
+
+  @include media-xs{
+    @include collapsed();
+    .jumbotron h1{
+      padding: 70px 0 30px;
+      font-size: 1.8em;
+      text-align: left;
+    }
+  }
+}

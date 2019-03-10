@@ -1,0 +1,67 @@
+@import 'variables';
+
+@mixin size($value){ 
+  width: $value;
+  height: $value;
+}
+@mixin opacity($value){
+  opacity: $value;
+  -webkit-opacity: $value;
+  -moz-opacity: $value;
+  -o-opacity: $value;
+  -ms-opacity: $value;
+}
+
+@mixin transition($value){
+  transition: $value;
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  -o-transition: $value;
+  -ms-transition: $value;
+}
+
+@mixin animation($v...){
+  animation: $v; 
+  -webkit-animation: $v; 
+  -moz-animation: $v; 
+  -o-animation: $v; 
+  -ms-animation: $v; 
+}
+
+@mixin link-hover($normal, $hover){
+  color: $normal;
+  transition: all 0.1s;
+  &:hover, &:active{
+    color: $hover;
+  }
+  &:hover, &:active, &:focus{
+    text-decoration: none;
+  }
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@mixin media-xs{
+  @media(max-width: 768px){
+    @content;
+  }
+}
+
+@mixin media-md{
+  @media(min-width: 1200px){
+    @content;
+  }
+}

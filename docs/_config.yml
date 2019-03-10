@@ -1,1 +1,55 @@
-theme: jekyll-theme-cayman
+title: 毛帅的Wiki
+description: "{Code, Thoughts, Sharing}"
+url: https://wiki.imshuai.com
+author: 毛帅
+author_avatar_url: http://imshuai.com/content/images/2018/12/avatar.jpg
+email: imshuai67@gmail.com
+logo: assets/img/favicon.png
+keywords: 
+  - Java
+  - Linux
+  - 架构
+
+permalink: /:title.html
+# permalink: /:year/:month/:day/:title.html
+paginate: 7
+paginate_path: "page:num"
+markdown: kramdown
+markdown_ext: md
+excerpt_separator: "<!--more-->"
+highlighter: rouge
+lsi: false
+exclude: ['README.md', '.*', 'bin/', 'Gemfile', 'node_modules', '*.log', 'package.json', 'vendor']
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+ga: 'UA-91318614-3'
+twitter_url: https://twitter.com/oneb_it
+
+sass:
+    style: compressed
+
+defaults:
+  -
+    scope:
+      path: "_drafts"
+    values:
+      layout: "blog"
+  -
+    scope:
+      path: "_posts"
+    values:
+      layout: "blog"
+
+series:
+  # 'Effective-C++': '/effective-cpp.html'
+  # 'Vim-Practice': '/vim-practice.html'
+  # 'Git-Workflow': '/git-workflow.html'
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-redirect-from
+  - jekyll-include-cache

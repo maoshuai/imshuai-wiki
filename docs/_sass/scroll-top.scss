@@ -1,0 +1,23 @@
+@import 'mixins';
+@import 'variables';
+
+#btnScrolltop {
+  position: fixed;
+  right: 50px;
+  bottom: 65px;
+  @include size(40px);
+  font-size: 32px;
+  visibility: hidden;
+  @include opacity(0);
+  @include transition(all .25s ease-in-out);
+}
+#btnScrolltop.show{
+  visibility: visible;
+  @include opacity(0.3);
+}
+#btnScrolltop:hover{
+  @include opacity(1);
+}
+#btnScrolltop:hover, #btnScrolltop:focus, #btnScrolltop:active {
+  text-decoration: none;
+}
