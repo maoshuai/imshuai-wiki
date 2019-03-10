@@ -1,0 +1,13 @@
+docs/_site
+.DS_Store
+.vscode
+docs/Gemfile.lock
+*.swp
+*.log
+.idea
+.tmp
+dump.rdb
+.sass-cache
+.jekyll-metadata
+_drafts/
+vendor/
