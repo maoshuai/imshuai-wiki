@@ -1,4 +1,5 @@
 docs/_site
+docs/_posts/.Archive
 .DS_Store
 .vscode
 docs/Gemfile.lock
