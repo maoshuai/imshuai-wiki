@@ -58,6 +58,32 @@ Here is my wiki site for note-taking and sharing
 
 最终有两个让我比较了很久：TiddlyWiki和vimwiki，两者相同点是都支持Generate静态html，但TiddlyWiki需要通过一个单页面HTML编写和生成，有点别扭。而vimwiki是基于vim的，本来已经打算使用了。最后无意间看到了[Harttl Land](https://harttle.land/)，感觉很不错，我再次回到了Jekyll的怀抱。结合 Git Page 的自动生成功能，基本满足了我1到4的需求。而第5点搜索功能，Jekyll也是可以通过插件实现的，后续我再琢磨吧。实在不行，不还是有Google嘛。
 
+
+
+# 本地预览
+
+本地可以通过安装jekyll预览HTML输出效果。
+
+1. 安装jekyll官网步骤先配置jekyll环境：
+
+   <https://jekyllrb.com/docs/>
+
+2. 安装gem依赖（进入docs目录操作）
+
+   ```shell
+   bundle install
+   ```
+
+3. 然后起本地是server（进入docs目录操作）
+
+   ```
+   bundle exec jekyll serve
+   ```
+
+   根据提示，一般浏览器打开：<http://localhost:4000>
+
+
+
 # 最后
 
 让我们开始Wiki吧！
