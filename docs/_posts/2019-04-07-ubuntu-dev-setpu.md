@@ -42,6 +42,13 @@ fi
 
 # 安装开发工具
 
+## 安装vim
+ubuntu默认自带的并不是完整版的vim，而是vim-lite，功能有缩水，所以需手工安装完整版vim
+
+```shell
+sudo apt install vim -y
+```
+
 ## 安装git
 
 ```shell
