@@ -64,7 +64,7 @@ Here is my wiki site for note-taking and sharing
 
 本地可以通过安装jekyll预览HTML输出效果。
 
-1. 安装jekyll官网步骤先配置jekyll环境：
+1. 按照jekyll官网步骤先配置jekyll环境：
 
    <https://jekyllrb.com/docs/>
 
