@@ -103,6 +103,12 @@ StartupWMClass=Eclipse
 
 参考docker官网的步骤即可：<https://docs.docker.com/install/linux/docker-ce/ubuntu/>
 
+配置非root用户使用（即添加到docker用户组）：
+
+```shell
+sudo usermod -aG docker <userName>
+```
+
 ## 安装net-tools
 
 安装net-tools后，可以使用netstat、ifconfig等命令：
