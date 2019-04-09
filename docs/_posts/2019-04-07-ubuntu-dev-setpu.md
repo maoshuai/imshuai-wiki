@@ -10,7 +10,7 @@ tags: Ubuntu Linux
 
 # 规划目录
 
-在~目录下创建一个目录~/g，算是工作目录。然后创建一个dev_tools放置一些开发工具。
+在`~`目录下创建一个目录`~/g`，算是工作目录。然后创建一个dev_tools放置一些开发工具。
 
 ```shell
 mkdir -p ~/g/dev_tools
@@ -181,7 +181,10 @@ gem install jekyll bundler
 
 <https://www.pinyinjoe.com/linux/ubuntu-18-gnome-chinese-setup.htm>
 
+## 配置termial
 
+### 修改光标为竖线
+Edit->Preference->Text->Cursor->Cursor shape，选择I-Beam
 
 ## 配置命令行为vi风格
 
