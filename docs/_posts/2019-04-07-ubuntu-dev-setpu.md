@@ -115,6 +115,7 @@ StartupWMClass=Eclipse
 ```shell
 sudo usermod -aG docker <userName>
 ```
+重启机器。
 
 ## 安装net-tools
 
@@ -208,6 +209,16 @@ sudo apt install gnome-tweak-tool -y
 
 ```shell
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+```
+
+## 使用windows风格的任务栏，合并top bar和任务栏
+安装如下插件，注销重新登录后打开gnome-tweak-tool，打开extension也签根据需要调整。
+```
+sudo apt install \
+gnome-tweak-tool \
+gnome-shell-extension-dash-to-panel \ # （变成传统样式的关键扩展，第一底部面板全集成）
+gnome-shell-extensions \常用扩展合集）
+gnome-shell-extension-top-icons-plus #（托盘图标显示扩展）
 ```
 
 # 其他
