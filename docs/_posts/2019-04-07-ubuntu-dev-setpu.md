@@ -220,6 +220,7 @@ gnome-shell-extension-dash-to-panel \ # （变成传统样式的关键扩展，�
 gnome-shell-extensions \常用扩展合集）
 gnome-shell-extension-top-icons-plus #（托盘图标显示扩展）
 ```
+参考：<http://www.mintos.org/distros/bionic-gnome-tweak.html>
 
 # 其他
 
