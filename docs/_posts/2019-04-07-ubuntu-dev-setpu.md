@@ -229,6 +229,31 @@ gnome-shell-extension-top-icons-plus #（托盘图标显示扩展）
 ```
 参考：<http://www.mintos.org/distros/bionic-gnome-tweak.html>
 
+# 设置登录界面背景
+
+Ubuntu的锁屏画面和桌面壁纸可通过settings->background直接修改。但login screen仍然是纯色，看起来不协调。可以通过修改配置文件`/usr/share/gnome-shell/theme/ubuntu.css`更换背景图片。
+
+将下面的代码
+```
+#lockDialogGroup {
+  background: #2c001e url(resource:///org/gnome/shell/theme/noise-texture.png);
+  background-repeat: repeat; }
+```
+
+修改为：
+
+```
+#lockDialogGroup {
+  background: #2c001e url(file:///usr/share/backgrounds/Halifax_Sunset_by_Vlad_Drobinin.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+ }
+```
+其中background属性是图片地址。
+
+参考： <https://vitux.com/how-to-change-login-lock-screen-background-in-ubuntu/>
+
 # 其他
 
 ## 挂载windows分区
