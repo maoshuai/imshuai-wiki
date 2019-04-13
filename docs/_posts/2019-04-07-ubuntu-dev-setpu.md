@@ -98,7 +98,7 @@ StartupWMClass=Eclipse
 
 参考：<https://askubuntu.com/questions/80013/how-to-pin-eclipse-to-the-unity-launcher>
 
-## 安装 Intellij Idea
+## 安装 IntelliJ IDEA
 
 官网下载.tar.gz文件，解压到/dev_tools目录。
 
@@ -165,7 +165,14 @@ gem install jekyll bundler
 ```
 参考：<https://jekyllrb.com/docs/installation/>
 
+# 安装windows字体
 
+为了兼容Windows的常用字体（如Times New Roman），可以将Windows的字体统一安装到Ubuntu下。
+
+在ubuntu的`/usr/share/fonts`目录下创建一个目录（比如winfonts），然后将windows的`C:/Windows/Fonts`的文件全部拷贝至此即可。打开LibreOffice或其他软件，字体列表中，可以看到Times New Roman字体即可。
+
+另外，虽然`~/.fonts`目录是用户级的字体文件目录，里面的字体LibreOffice也能正常识别，但WPS却识别不到字体，因此，建议还是安装在`/usr/share/fonts`，并且是系统级生效的。具体可以参考：
+<http://wps-community.org/forum/viewtopic.php?f=4&t=641>
 
 
 # 配置偏好
