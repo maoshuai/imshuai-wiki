@@ -124,7 +124,7 @@ sudo usermod -aG docker <userName>
 ```shell
 sudo apt install net-tools -y
 ```
-
+# 安装办公软件
 ## 安装typora
 
 参考官网的安装命令。
@@ -140,6 +140,9 @@ sudo apt install net-tools -y
 ## 安装Virtualbox
 
 官网下载deb文件安装。
+
+## 安装anki
+anki官网提供了linux版本的包，按官网指导安装。
 
 ## 安装Jekyll
 
