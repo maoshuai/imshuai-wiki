@@ -324,4 +324,5 @@ HDMI外接电视或带音频的显示器，可以通过Settings->Sound里的Outp
 - [ ] 安装Wine
 - [ ] ubuntu hibernate
 - [ ] 安装wps
+- [ ] 安装nexus-repository-sonatype
 
