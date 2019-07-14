@@ -2,6 +2,11 @@
 title: Too many open files以及ulimit的用法
 tags: Linux Java
 ---
+
+`Too many open files`是一个常见的错误，通常是由于系统配置或程序打开过多文件原因导致。这个问题常常又与`ulimit`相关。关于`ulimit`的用法有不少坑，本文将遇到的坑予以梳理。
+
+<!--more-->
+
 # Too many open files
 `Too many open files`是一个常见的错误，通常是由于系统配置或程序打开过多文件原因导致。比如下面是Java程序由于打开文件超过最大限制，而无法创建文件的错误堆栈：
 ```java
@@ -85,7 +90,7 @@ Exception in thread "main" java.io.IOException: Too many open files
 ```
 虽然ulimit的u是user的意思，但事实证明，**ulimit控制的维度是shell会话或shell创建的进程（至少对于nofile来说）。即，当前用户打开的文件数，是可以远远超过nofile的值。** 
 
-所以，通过lsof | wc -l 查看系统打开文件数，来判断是否ulimit超了，是不正确的。另外，lsof | wc -l 是也并不反映系统打开的文件数！（后续补充wiki说明）
+所以，通过`lsof | wc -l` 查看系统打开文件数，来判断是否打开文件数是否超了，是不正确的。另外，`lsof | wc -l` 是也并不反映系统打开的文件数！（后续补充wiki说明）
 
 ## soft和hard的区分？
 理解ulimit第二个重要方面是soft和hard的区分，ulimit对资源的限制区分为soft和hard两类，即同一个资源（如nofile）存在soft和hard两个值。
@@ -189,6 +194,6 @@ ulimit -n 1000 # 同时将nofiles的hard和soft值设置为1000
 # See also
 * [Session failures with error "Too many open files"](https://community.pivotal.io/s/article/Session-failures-with-Too-many-open-files)
 * [ulimit man page](https://ss64.com/bash/ulimit.html)
-* [lsof | wc -l sums up a lot of duplicated entries](https://unix.stackexchange.com/questions/36841/why-is-number-of-open-files-limited-in-linux)
+* [`lsof | wc -l` sums up a lot of duplicated entries](https://unix.stackexchange.com/questions/36841/why-is-number-of-open-files-limited-in-linux)
 * [How and when and where jvm change the max open files value of Linux?](https://stackoverflow.com/questions/30487284/how-and-when-and-where-jvm-change-the-max-open-files-value-of-linux)
 * [Why file-nr and lsof count on open files differs? ](https://unix.stackexchange.com/questions/176967/why-file-nr-and-lsof-count-on-open-files-differs)
