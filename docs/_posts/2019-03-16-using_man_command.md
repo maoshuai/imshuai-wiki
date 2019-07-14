@@ -150,9 +150,20 @@ man 文档是存储一个特定位置，通过命令 `man -w [command]` 可以�
 maoshuai@maoshuai-ubuntu-desktop-18:~$ man -w ls
 /usr/share/man/man1/ls.1.gz
 ```
+# man查看内置命令
+有时，你会发现一些常用的命令（比如cd），man命令竟然找不到帮助文档，或者直接打开一个的“BUILTIN(1)”的man页面。原因是这些命令是shell内建的命令，没有单独的man文档。如果要看其使用方法，可以进入bash的man文档搜索即可。
+
+在某些平台（如Ubuntu）会直接提供一个help命令完成这个操作，比如`help cd`。如果没有这个命令，网上也有人给出了一个代替方法，把它放到~/.bashrc下，以后就可以用类似 `bashman cd` 的方法查看了：
+```
+bashman () 
+{ 
+    man bash | less -p "^       $1 "
+}
+```
 
 # See also
 
 * [man page - wikipedia](https://en.wikipedia.org/wiki/Man_page)
 * [Linux man Command Tutorial for Beginners (8 Examples)](https://www.howtoforge.com/linux-man-command/)
 * manual of man
+* [Where to view man pages for builtin commands?](https://stackoverflow.com/questions/22991942/where-to-view-man-pages-for-builtin-commands)
