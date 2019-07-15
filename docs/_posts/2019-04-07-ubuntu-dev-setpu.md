@@ -54,6 +54,15 @@ sudo apt install vim -y
 ```shell
 sudo apt install git -y
 ```
+
+## 安装curl
+
+curl是常用的命令行下载工具，很多工具也会依赖它：
+
+```
+sudo apt install curl -y
+```
+
 ## 安装Oracle JDK
 官网下载JDK的tar.gz文件，解压到目录dev_tools目录下。然后通过注册到alternatives
 
@@ -167,6 +176,14 @@ export PATH="$HOME/gems/bin:$PATH"
 gem install jekyll bundler
 ```
 参考：<https://jekyllrb.com/docs/installation/>
+
+## 安装nodejs
+```
+# Using Ubuntu
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+参考：<https://github.com/nodesource/distributions/blob/master/README.md#deb>
 
 # 安装windows字体
 
