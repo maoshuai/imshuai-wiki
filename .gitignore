@@ -24,3 +24,10 @@ sync_changes.log
 sync_hook.script
 
 **/.Archive
+
+# markeditor2.0
+**/.display_ignore
+**/.sort
+configs
+.folder_filter.config
+.markeditor
