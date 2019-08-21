@@ -71,7 +71,6 @@ while read line;do
   nc -z -w 2 $line
   echo $line $?
 done
-"
 ```
 上述脚本，可能输出如下，第二列0表示联通，否则为不通：
 ```
@@ -133,14 +132,19 @@ while read line;do
   (echo > /dev/tcp/$ip/$port) >/dev/null 2>&1
   echo $line $?
 done
-"
 ```
 
 但有个地方注意，必须用bash执行写入。
 
+# 在服务部署前检测端口
+
+有些情况，我们需要在服务部署前检测该服务的端口是否可访问。问题是此时这个端口并没有被监听，直接检测的结果自然是不通，我们需要排除，这不是因为网络本身不通（比如有防火墙）造成的。
+
+一种办法是，在目标机器的该端口部署一个简单的监听，而`nc`命令恰巧可以完成。
 
 # 参考文档
 
 * [Check whether a remote server port is open on Linux](https://www.pixelstech.net/article/1514049471-Check-whether-a-remote-server-port-is-open-on-Linux)
 * [Test from shell script if remote TCP port is open](https://stackoverflow.com/questions/4922943/test-from-shell-script-if-remote-tcp-port-is-open/5398366)
 * [bash and /dev/tcp - how does that work ?](https://ubuntuforums.org/showthread.php?t=1656623)
+* [5 Linux Utility to Test Network Connectivity](https://geekflare.com/linux-test-network-connectivity/amp/)
