@@ -20,7 +20,7 @@ telnet $host $port
 输出如下，表示端口联通（通过`ctl+]`退出）：
 
 ```
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ telnet 127.0.0.1 22
+maoshuai@ms:/tmp$ telnet 127.0.0.1 22
 Trying 127.0.0.1...
 Connected to 127.0.0.1.
 Escape character is '^]'.
@@ -30,7 +30,7 @@ SSH-2.0-OpenSSH_7.6p1 Ubuntu-4ubuntu0.3
 如下，表示端口不通：
 
 ```
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ telnet 127.0.0.1 222
+maoshuai@ms:/tmp$ telnet 127.0.0.1 222
 Trying 127.0.0.1...
 telnet: Unable to connect to remote host: Connection refused
 ```
@@ -47,23 +47,60 @@ nc -z $host $port
 
 
 ```
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ nc -z 127.0.0.1 22
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ echo $?
+maoshuai@ms:/tmp$ nc -z 127.0.0.1 22
+maoshuai@ms:/tmp$ echo $?
 0
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ nc -z 127.0.0.1 222
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ echo $?
+maoshuai@ms:/tmp$ nc -z 127.0.0.1 222
+maoshuai@ms:/tmp$ echo $?
 1
 ```
 
 假如需要检测一批IP下的端口是否联通，可以用下面的脚本：
 
 ```
-#!/bin/bash# checking network connectivity# IPs and ports to check# Ignore blank lines and treat hash sign as comments# comments will be kept as a comment of resultIP_PORT="# local host 127.0.0.1 22127.0.0.1 21
-# well known siteswww.google.com 80www.baidu.com 80"# checkingecho "$IP_PORT" | grep -Ev "^$" |while read line;do  # simply print comment line  echo "$line" | grep -qE "^#"  if [ $? -eq 0 ];then	  echo "$line"	  continue  fi  # normal line with ip and port  connectFlag="DOWN"  nc -z -w 1 $line  if [ $? -eq 0 ];then	  connectFlag="UP"  fi  printf "%-20s %5s %5s\n" $line $connectFlagdone
+#!/bin/bash
+# checking network connectivity
+
+# IPs and ports to check
+# Ignore blank lines and treat hash sign as comments
+# comments will be kept as a comment of result
+IP_PORT="
+# local host 
+127.0.0.1 22
+127.0.0.1 21
+# well known sites
+www.google.com 80
+www.baidu.com 80
+"
+
+# checking
+echo "$IP_PORT" | grep -Ev "^$" |
+while read line;do
+  # simply print comment line
+  echo "$line" | grep -qE "^#"
+  if [ $? -eq 0 ];then
+	  echo "$line"
+	  continue
+  fi
+
+  # normal line with ip and port
+  connectFlag="DOWN"
+  nc -z -w 1 $line
+  if [ $? -eq 0 ];then
+	  connectFlag="UP"
+  fi
+
+  printf "%-20s %5s %5s\n" $line $connectFlag
+done
 ```
 上述脚本，可能输出如下，第二列UP表示联通，否则DOWN为不通：
 ```
-# local host127.0.0.1               22    UP127.0.0.1               21  DOWN# well known siteswww.google.com          80    UPwww.baidu.com           80    UP
+# local host
+127.0.0.1               22    UP
+127.0.0.1               21  DOWN
+# well known sites
+www.google.com          80    UP
+www.baidu.com           80    UP
 ```
 脚本中增加了`-w`选项，用于控制最大探测超时时间为1秒。
 
@@ -71,9 +108,9 @@ maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ echo $?
 当然，也可以通过`-v`选项直接输出探测信息，适合单次手工查验，：
 
 ```
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ nc -zv 127.0.0.1 22
+maoshuai@ms:/tmp$ nc -zv 127.0.0.1 22
 Connection to 127.0.0.1 22 port [tcp/ssh] succeeded!
-maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ nc -zv 127.0.0.1 222
+maoshuai@ms:/tmp$ nc -zv 127.0.0.1 222
 nc: connect to 127.0.0.1 port 222 (tcp) failed: Connection refused
 
 ```
@@ -91,19 +128,55 @@ echo > /dev/tcp/$host/$port
 判断上述命令的退出码：
 
 ```
-maoshuai@maoshuai-ubuntu-desktop-18:/dev$ echo > /dev/tcp/127.0.0.1/22
-maoshuai@maoshuai-ubuntu-desktop-18:/dev$ echo $?
+maoshuai@ms:/dev$ echo > /dev/tcp/127.0.0.1/22
+maoshuai@ms:/dev$ echo $?
 0
-maoshuai@maoshuai-ubuntu-desktop-18:/dev$ echo > /dev/tcp/127.0.0.1/222
+maoshuai@ms:/dev$ echo > /dev/tcp/127.0.0.1/222
 bash: connect: Connection refused
 bash: /dev/tcp/127.0.0.1/222: Connection refused
-maoshuai@maoshuai-ubuntu-desktop-18:/dev$ echo $?
+maoshuai@ms:/dev$ echo $?
 1
 ```
 
 当然，也可以通过脚本，批量检测：
 ```
-#!/bin/bash# checking network connectivity# IPs and ports to check# Ignore blank lines and treat hash sign as comments# comments will be kept as a comment of resultIP_PORT="# local host 127.0.0.1 22127.0.0.1 21# well known siteswww.google.com 80www.baidu.com 80"# checkingecho "$IP_PORT" | grep -Ev "^$" |while read line;do  # simply print comment line  echo "$line" | grep -qE "^#"  if [ $? -eq 0 ];then	  echo "$line"	  continue  fi  # normal line with ip and port  connectFlag="DOWN"  ip=$(echo $line | awk '{print $1}')  port=$(echo $line | awk '{print $2}')  (echo > /dev/tcp/$ip/$port) >/dev/null 2>&1  if [ $? -eq 0 ];then    connectFlag="UP"  fi  printf "%-20s %5s %5s\n" $line $connectFlagdone
+#!/bin/bash
+# checking network connectivity
+
+# IPs and ports to check
+# Ignore blank lines and treat hash sign as comments
+# comments will be kept as a comment of result
+IP_PORT="
+# local host 
+127.0.0.1 22
+127.0.0.1 21
+
+# well known sites
+www.google.com 80
+www.baidu.com 80
+"
+
+# checking
+echo "$IP_PORT" | grep -Ev "^$" |
+while read line;do
+  # simply print comment line
+  echo "$line" | grep -qE "^#"
+  if [ $? -eq 0 ];then
+	  echo "$line"
+	  continue
+  fi
+
+  # normal line with ip and port
+  connectFlag="DOWN"
+  ip=$(echo $line | awk '{print $1}')
+  port=$(echo $line | awk '{print $2}')
+  (echo > /dev/tcp/$ip/$port) >/dev/null 2>&1
+  if [ $? -eq 0 ];then
+    connectFlag="UP"
+  fi
+
+  printf "%-20s %5s %5s\n" $line $connectFlag
+done
 ```
 
 输出结果和第一个方法一样，但有个地方注意，必须用bash执行写入。
