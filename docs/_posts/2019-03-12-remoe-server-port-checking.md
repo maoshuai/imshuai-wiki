@@ -13,13 +13,13 @@ tags: Linux Network Shell
 
 telnet 是最普遍的方法。非常简单，语法如下：
 
-```
+```shell
 telnet $host $port
 ```
 
 输出如下，表示端口联通（通过`ctl+]`退出）：
 
-```
+```shell
 maoshuai@ms:/tmp$ telnet 127.0.0.1 22
 Trying 127.0.0.1...
 Connected to 127.0.0.1.
@@ -29,7 +29,7 @@ SSH-2.0-OpenSSH_7.6p1 Ubuntu-4ubuntu0.3
 
 如下，表示端口不通：
 
-```
+```shell
 maoshuai@ms:/tmp$ telnet 127.0.0.1 222
 Trying 127.0.0.1...
 telnet: Unable to connect to remote host: Connection refused
@@ -39,14 +39,14 @@ telnet: Unable to connect to remote host: Connection refused
 
 telnet 是交互式的，适合单次手工检测，对于批量检测，利用nc更为方便。基本用法如下：
 
-```
+```shell
 nc -z $host $port
 ```
 
 然后检测上述命令的exit code，为0表示可联通，否则表示不联通：
 
 
-```
+```shell
 maoshuai@ms:/tmp$ nc -z 127.0.0.1 22
 maoshuai@ms:/tmp$ echo $?
 0
@@ -57,7 +57,7 @@ maoshuai@ms:/tmp$ echo $?
 
 假如需要检测一批IP下的端口是否联通，可以用下面的脚本：
 
-```
+```shell
 #!/bin/bash
 # checking network connectivity
 
@@ -93,8 +93,8 @@ while read line;do
   printf "%-20s %5s %5s\n" $line $connectFlag
 done
 ```
-上述脚本，可能输出如下，第二列UP表示联通，否则DOWN为不通：
-```
+上述脚本，可能输出如下，最后一列UP表示联通，否则DOWN为不通：
+```shell
 # local host
 127.0.0.1               22    UP
 127.0.0.1               21  DOWN
@@ -107,12 +107,11 @@ www.baidu.com           80    UP
 
 当然，也可以通过`-v`选项直接输出探测信息，适合单次手工查验，：
 
-```
+```shell
 maoshuai@ms:/tmp$ nc -zv 127.0.0.1 22
 Connection to 127.0.0.1 22 port [tcp/ssh] succeeded!
 maoshuai@ms:/tmp$ nc -zv 127.0.0.1 222
 nc: connect to 127.0.0.1 port 222 (tcp) failed: Connection refused
-
 ```
 
 # 通过写入设备文件
@@ -121,13 +120,13 @@ nc: connect to 127.0.0.1 port 222 (tcp) failed: Connection refused
 
 这种方法有点awkward，但是最兼容的方法。如果所在的服务器中没有安装nc甚至telnet命令（比如某些docker容器中），用法如下：
 
-```
+```shell
 echo > /dev/tcp/$host/$port
 ```
 
 判断上述命令的退出码：
 
-```
+```shell
 maoshuai@ms:/dev$ echo > /dev/tcp/127.0.0.1/22
 maoshuai@ms:/dev$ echo $?
 0
@@ -139,7 +138,7 @@ maoshuai@ms:/dev$ echo $?
 ```
 
 当然，也可以通过脚本，批量检测：
-```
+```shell
 #!/bin/bash
 # checking network connectivity
 
