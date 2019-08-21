@@ -58,28 +58,14 @@ maoshuai@maoshuai-ubuntu-desktop-18:/tmp$ echo $?
 假如需要检测一批IP下的端口是否联通，可以用下面的脚本：
 
 ```
-#!/bin/bash
-# IPs and ports to check
-IP_PORT="127.0.0.1 22
-127.0.0.1 21
-127.0.0.1 222
-192.168.3.1 80"
-
-# checking
-echo "$IP_PORT" |
-while read line;do
-  nc -z -w 2 $line
-  echo $line $?
-done
+#!/bin/bash# checking network connectivity# IPs and ports to check# Ignore blank lines and treat hash sign as comments# comments will be kept as a comment of resultIP_PORT="# local host 127.0.0.1 22127.0.0.1 21
+# well known siteswww.google.com 80www.baidu.com 80"# checkingecho "$IP_PORT" | grep -Ev "^$" |while read line;do  # simply print comment line  echo "$line" | grep -qE "^#"  if [ $? -eq 0 ];then	  echo "$line"	  continue  fi  # normal line with ip and port  connectFlag="DOWN"  nc -z -w 1 $line  if [ $? -eq 0 ];then	  connectFlag="UP"  fi  printf "%-20s %5s %5s\n" $line $connectFlagdone
 ```
-上述脚本，可能输出如下，第二列0表示联通，否则为不通：
+上述脚本，可能输出如下，第二列UP表示联通，否则DOWN为不通：
 ```
-127.0.0.1 22 0
-127.0.0.1 21 1
-127.0.0.1 222 1
-192.168.3.1 80 1
+# local host127.0.0.1               22    UP127.0.0.1               21  DOWN# well known siteswww.google.com          80    UPwww.baidu.com           80    UP
 ```
-脚本中增加了`-w`选项，用于控制最大探测超时时间为2秒。
+脚本中增加了`-w`选项，用于控制最大探测超时时间为1秒。
 
 
 当然，也可以通过`-v`选项直接输出探测信息，适合单次手工查验，：
@@ -117,24 +103,11 @@ maoshuai@maoshuai-ubuntu-desktop-18:/dev$ echo $?
 
 当然，也可以通过脚本，批量检测：
 ```
-#!/bin/bash
-# IPs and ports to check
-IP_PORT="127.0.0.1 22
-127.0.0.1 21
-127.0.0.1 222
-192.168.3.1 80"
-
-# checking
-echo "$IP_PORT" |
-while read line;do
-  ip=$(echo $line | awk '{print $1}')
-  port=$(echo $line | awk '{print $2}')
-  (echo > /dev/tcp/$ip/$port) >/dev/null 2>&1
-  echo $line $?
-done
+#!/bin/bash# checking network connectivity# IPs and ports to check# Ignore blank lines and treat hash sign as comments# comments will be kept as a comment of resultIP_PORT="# local host 127.0.0.1 22127.0.0.1 21# well known siteswww.google.com 80www.baidu.com 80"# checkingecho "$IP_PORT" | grep -Ev "^$" |while read line;do  # simply print comment line  echo "$line" | grep -qE "^#"  if [ $? -eq 0 ];then	  echo "$line"	  continue  fi  # normal line with ip and port  connectFlag="DOWN"  ip=$(echo $line | awk '{print $1}')  port=$(echo $line | awk '{print $2}')  (echo > /dev/tcp/$ip/$port) >/dev/null 2>&1  if [ $? -eq 0 ];then    connectFlag="UP"  fi  printf "%-20s %5s %5s\n" $line $connectFlagdone
 ```
 
-但有个地方注意，必须用bash执行写入。
+输出结果和第一个方法一样，但有个地方注意，必须用bash执行写入。
+
 
 # 在服务部署前检测端口
 
