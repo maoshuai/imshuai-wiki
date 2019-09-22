@@ -153,6 +153,14 @@ sudo apt install net-tools -y
 ## 安装anki
 anki官网提供了linux版本的包，按官网指导安装。
 
+## 安装unrar
+
+unrar可以用于解压rar文件。安装方法：
+
+```
+sudo apt install unrar
+```
+
 ## 安装Jekyll
 
 首先安装ruby环境：
