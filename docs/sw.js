@@ -1,11 +1,12 @@
 var CACHE_NAME = 'v2';
 var urlsToCache = [
-    '/',
     '/assets/css/site.css',
     '/assets/js/blog.min.js'
 ];
 var blackList = [
-    /google-analytics.com.*collect/
+    /google-analytics.com.*collect/,
+    /.*.html$/,
+    /\//
 ];
 
 self.addEventListener('install', function (event) {
@@ -24,23 +25,28 @@ self.addEventListener('activate', function (event) {
     }));
 });
 
-self.addEventListener('fetch', function (event) {
-    if (
-        event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'
-    ) return cache(event.request);
-    if (
-        event.request.method !== 'GET' ||
-        blackList.some(function (regex) {
-            return regex.exec(event.request.url);
-        })
-    ) return network(event.request);
-    var pn = networkAndSave(event.request);
-    event.respondWith(cache(event.request).then(function (res) {
-        return res || pn;
-    }).catch(function () {
-        return pn;
-    }));
+// no caching
+self.addEventListener('fetch', function(event) {
+  event.respondWith(fetch(event.request));
 });
+
+// self.addEventListener('fetch', function (event) {
+//     if (
+//         event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'
+//     ) return cache(event.request);
+//     if (
+//         event.request.method !== 'GET' ||
+//         blackList.some(function (regex) {
+//             return regex.exec(event.request.url);
+//         })
+//     ) return network(event.request);
+//     var pn = networkAndSave(event.request);
+//     event.respondWith(cache(event.request).then(function (res) {
+//         return res || pn;
+//     }).catch(function () {
+//         return pn;
+//     }));
+// });
 
 function cache (req) {
     return caches.open(CACHE_NAME).then(cache => cache.match(req.clone()));
